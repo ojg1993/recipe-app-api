@@ -16,19 +16,19 @@
 9. Configured dockerhub credentials in github repo secrets
 
 10. Database configuration
-  - Add psycopg2 to requirements.txt
-  - Configure postgresql dependencies in project Dockerfile
+  - Added psycopg2 to requirements.txt
+  - Configured postgresql dependencies in project Dockerfile
     [postgresql-client, build-base, postgresql-dev, musl-dev]
-  - Delete installation dependencies[build-base, postgresql-dev, musl-dev]
+  - Deleted installation dependencies[build-base, postgresql-dev, musl-dev]
   - Setup Django to use postgresql
 
 11. Database configuration 2 -> start django after finishing db configuration
-  - Add core application
-  - Add test directory
-  - Add core/test/test_commands.py
-  - Add core/management/commands/wait_for_db.py
-
-
+  - Added core application
+  - Handled race condition(Wait for the db to be ready)
+    - Added core/test/test_commands.py
+    - Added core/management/commands/wait_for_db.py
+  - Added migrate, wait_for_db commands in docker-compose.yml
+  - Added wait_for_db test command in Github Actions
 
 
 ※ TDD application
