@@ -1,0 +1,16 @@
+1. Created Gihub repo
+
+2. Added requirements.txt, requirements.dev.txt
+3. Added app directory
+
+4. Scripted Dockerfile -> Docker-Compose.yml -> .dockerignore
+5. Added linting configuration in app directory(.flake8)
+
+6. Execute the docker-compose commands
+  - docker-compose run --rm app sh -c "django-admin startproject app ."
+  - docker-compose up
+
+7. Access to the server
+
+8. Configured github actions .github/workflows/checks.yml
+9. Configured dockerhub credentials in github repo secrets
