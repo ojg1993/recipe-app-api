@@ -14,3 +14,23 @@
 
 8. Configured github actions .github/workflows/checks.yml
 9. Configured dockerhub credentials in github repo secrets
+
+10. Database configuration
+  - Add psycopg2 to requirements.txt
+  - Configure postgresql dependencies in project Dockerfile
+    [postgresql-client, build-base, postgresql-dev, musl-dev]
+  - Delete installation dependencies[build-base, postgresql-dev, musl-dev]
+  - Setup Django to use postgresql
+
+11. Database configuration 2 -> start django after finishing db configuration
+  - Add core application
+  - Add test directory
+  - Add core/test/test_commands.py
+  - Add core/management/commands/wait_for_db.py
+
+
+
+
+※ TDD application
+  a. scripts test code first with the expected actions of the view
+  b. scripts view code fitting the test code
