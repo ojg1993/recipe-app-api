@@ -53,6 +53,12 @@
     - built new docker image
     - configured drf-spectacular in settings & urls
 
+15. Build User API -> startapp users
+  - Deleted unecessary files & create tests dir
+  - Defined test actions
+  - Created serializers.py and define UserSerializer
+  - Implemented CreateUserView and mapped urls
+
 
 ※ TDD application
   a. scripts test code first with the expected actions of the view
