@@ -59,6 +59,13 @@
   - Created serializers.py and define UserSerializer
   - Implemented CreateUserView and mapped urls
 
+16. Implement Token authentication
+  - Configured rest_framework.authtoken in setttings.py
+  - Implemented token authentication test
+  - Implemented AuthTokenSerializer
+    - **Customised validate method to pass email as username**
+  - Implemented CreateTokenView and mapped urls
+    - Inherited ObatainAuthToken and utilised methods
 
 ※ TDD application
   a. scripts test code first with the expected actions of the view
