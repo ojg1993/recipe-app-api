@@ -30,6 +30,17 @@
   - Added migrate, wait_for_db commands in docker-compose.yml
   - Added wait_for_db test command in Github Actions
 
+12. Customise User model
+  - Add User customisation with AbstractUser, PermissionsMixin
+  - Add UserManager customisation with BaseUserManager
+  - Configure AUTH_USER_MODEL as 'core.User' in settings.py
+  - Execute makemigrations
+    - docker-compose run --rm app sh -c "python manage.py makemigrations"
+  - Delete existing db data
+    - docker volume rm recipe-app-api_dev-db-data
+  - Execute migrate
+    - docker-compose run --rm app sh -c "python manage.py wait_for_db && python manage.py migrate"
+
 
 ※ TDD application
   a. scripts test code first with the expected actions of the view
