@@ -14,6 +14,17 @@ class UserSerializer(serializers.ModelSerializer):
         # Create and return a user with encrypted password
         return get_user_model().objects.create_user(**validated_data)
 
+    def update(self, instance, validated_data):
+        # Update and return user
+        password = validated_data.pop('password', None)  # initialise password
+        user = super().update(instance, validated_data)  # update fields
+
+        if password:  # if password is passed above set password
+            user.set_password(password)
+            user.save()
+
+        return instance
+
 
 class AuthTokenSerializer(serializers.Serializer):
     email = serializers.EmailField()
@@ -27,9 +38,9 @@ class AuthTokenSerializer(serializers.Serializer):
         password = attrs.get('password')
         user = authenticate(
             request=self.context.get('request'),
-            username=email, # Using email as username
+            username=email,  # Using email as username
             password=password
-        )
+            )
         if not user:
             msg = _('Unable to log in with provided credentials.')
             # Returning 400 bad request error

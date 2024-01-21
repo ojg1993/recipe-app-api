@@ -67,6 +67,13 @@
   - Implemented CreateTokenView and mapped urls
     - Inherited ObatainAuthToken and utilised methods
 
+17. Implement user management
+  - Implemented PrivateUserApiTests - URL: me
+  - Added update method to UserSerializer to manage user information change
+    - ModelSerializer class method overiding
+  - Implemented ManageUserView and mapped urls
+    - APIVEW class get_object method overiding
+
 ※ TDD application
   a. scripts test code first with the expected actions of the view
   b. scripts view code fitting the test code
