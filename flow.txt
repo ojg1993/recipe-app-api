@@ -47,6 +47,13 @@
   - Added CustomUserAdmin customisation with UserAdmin class
   - Registerd User model with CustomUserAdmin
 
+14. Auto-generation of API documentation -> drf-spectacular
+  - OpenAPI Schema & Docs with a browsable web interface
+    - added drf-spectacular in requirements.txt
+    - built new docker image
+    - configured drf-spectacular in settings & urls
+
+
 ※ TDD application
   a. scripts test code first with the expected actions of the view
   b. scripts view code fitting the test code
