@@ -92,7 +92,7 @@
     - Implemented tests for detail view actions
       - PATCH, PUT, DELETE
 
-19. Build tag API
+19. Build tags API
   - Initial setup
     - Added test_create_tag method in ModelTests
     - Added Tag model and connected to recipe model as M2M field
@@ -112,6 +112,33 @@
         ※ DB refresh not required on M2M relationship
       - Update recipe -> tag then attach tag to the recipe
 
+20. Build ingredients API
+  - Initial setup
+    - Added test_create_ingredients method in ModelTests
+    - Added Ingredient model and connected to recipe model as M2M field
+    - Registered Ingredient in admin
+  - Building API
+    - Implemented PublicRecipeApiTests & PrivateIngredientsAPITests
+    - Added IngredientSerializer
+    - Implemented IngredientViewSet and mapped urls
+      - Customised get_queryset to filter ingredients that are created by authenticated user
+    - Adding detail functionality [update, delete]
+      - Added test_update_ingredient to API Tests
+      - Added test_delete_ingredient to API Tests
+      - Add UpdateModelMixin, DestroyModelMixin in IngredientViewSet
+    - Adding ingredient adding functionality as a part of recipe view
+      - Added test_create_recipe_with_new_ingredients and Added test_create_recipe_with_existing_recipe to API Tests
+      - Customised create method RecipeSerializer
+        - Added _get_or_create_ingredients method and utilised in create method
+      - Added test_create_ingredient_on_update, test_update_recipe_assign_ingredient to API Tests
+      - Customised update method in RecipeSerializer
+
+21. Refactoring ingredient & tag ViewSet
+  - Create BaseRecipeAttrViewSet
+  - Upstream to BaseRecipeAttrViewSet redundant code int both ViewSets
+  - Inherit BaseRecipeAttrViewSet in each ViewSets
+
+22. Build recipe image API
 
 
 ※ TDD application
