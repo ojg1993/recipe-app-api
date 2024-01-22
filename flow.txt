@@ -74,6 +74,26 @@
   - Implemented ManageUserView and mapped urls
     - APIVEW class get_object method overiding
 
+18. Build recipe API
+  - List view
+    - Implemented test_create_recipe method in ModelTests
+    - Implemented Recipe model
+    - Created recipe app storing api & test only
+    - Implemented PublicRecipeTests for unauthenticated request
+    - Implemented PrivateRecipeTests for unauthenticated request
+    - Implemented RecipeSerializer
+    - Implemented RecipeViewSet and configured urls
+       - Customised get_queryset method to return authenticated user's recipe only
+  - Detail view
+    - Implemented test_get_recipe_detail method in PrivateRecipeTests
+    - Implemented RecipeDetailSerializer
+    - Customised RecipeViewSet serializer setup with get_serializer_class
+      - list -> RecipeSerializer else -> RecipeDetailSerializer
+    - Implemented tests for detail view actions
+      - PATCH, PUT, DELETE
+
+
+
 ※ TDD application
   a. scripts test code first with the expected actions of the view
   b. scripts view code fitting the test code
