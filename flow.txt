@@ -92,6 +92,26 @@
     - Implemented tests for detail view actions
       - PATCH, PUT, DELETE
 
+19. Build tag API
+  - Initial setup
+    - Added test_create_tag method in ModelTests
+    - Added Tag model and connected to recipe model as M2M field
+    - Registered Tag in admin
+  - Building API
+    - Implemented PublicTagApiTests for unauthenticated users
+    - Implemented PrivateTagApiTests for authenticated users
+        - test_retrieve_tags, test_tags_limited_to_user
+        - test_update_tag, test_delete_tag
+  - Update recipe API functionality with Nested Serializers
+    - Implemented test_create_recipe_with_new_tag, test_create_recipe_with_existing_tag
+    - Nested TagSerializer into RecipeSerializer
+    - Customized create method to process new or existing tag data
+      - Create recipe -> tag then attach tag to the recipe
+    - Customized update method to process new or existing or deleting tag data
+      - Implemented test_create_tag_on_update, test_update_recipe_assign_tag, test_clear_recipe_tags
+        ※ DB refresh not required on M2M relationship
+      - Update recipe -> tag then attach tag to the recipe
+
 
 
 ※ TDD application
