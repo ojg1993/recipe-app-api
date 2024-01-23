@@ -139,6 +139,28 @@
   - Inherit BaseRecipeAttrViewSet in each ViewSets
 
 22. Build recipe image API
+  - Configured image upload pre-settings
+    - Added Pillow in requirements.txt
+    - Added Pillow dependencies installation setting in Dockerfile
+    - Volumed static file in docker-compose.yml
+    - Added STATIC_URL/ROOT, MEDIA_URL/ROOT configuration in settings.py
+    - Added static path in urls.py in debug mode
+  - Implemented file path & name generator
+    - Implemented test_recipe_file_name_uuid method to check creating appropriate image path
+    - Implemented recipe_file_name_uuid method in models.py and added to Recipe model
+  - Implement image upload functionality
+    - Added ImageUploadTests class in test_recipe_api.py
+      - implemented tearDown method as the file will not be stored in db
+      - implemented test_upload_image, test_upload_image_invalid methods
+    - Added RecipeImageSerializer
+      - Included image field in RecipeDetailSerializer
+    - Customised upload_image method and added in RecipeAPIViewSet using action decorator
+      - Added 'COMPONENT_SPLIT_REQUEST': True in SPECTACULAR_SETTINGS
+
+
+
+
+
 
 
 ※ TDD application

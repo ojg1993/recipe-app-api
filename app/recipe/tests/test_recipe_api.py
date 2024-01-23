@@ -1,5 +1,8 @@
 from decimal import Decimal
-from django.contrib.auth import get_user_model
+import tempfile
+import os
+
+from PIL import Image  # Pillow library
 
 from django.test import TestCase
 from django.urls import reverse
@@ -7,6 +10,7 @@ from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
 
+from django.contrib.auth import get_user_model
 from core.models import Recipe, Tag, Ingredient
 from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
 
@@ -22,13 +26,18 @@ def detail_url(recipe_id):
     return reverse("recipe:recipe-detail", args=[recipe_id])
 
 
+def image_upload_url(recipe_id):
+    # Create and return an image upload URL
+    return reverse('recipe:recipe-upload-image', args=[recipe_id])
+
+
 def create_recipe(user, **params):
     # Create and return a sample recipe
     defaults = {
         'title': 'Test Recipe',
         'time_minutes': 22,
         'price': Decimal('5.25'),
-        'description': 'A test recipe',
+        'description': 'A tests recipe',
         'link': 'https://www.example.com/recipe.pdf'
     }
     defaults.update(params)
@@ -363,3 +372,49 @@ class PrivateRecipeAPITests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(recipe.ingredients.count(), 0)
+
+
+class ImageUploadTests(TestCase):
+    # Tests for the image upload API
+
+    def setUp(self) -> None:
+        self.client = APIClient()
+        self.user = get_user_model().objects.create_user(
+            'user@example.com',
+            'pass123'
+        )
+        self.client.force_authenticate(self.user)
+        self.recipe = create_recipe(user=self.user)
+
+    def tearDown(self) -> None:
+        # Clearing generated image file path
+        self.recipe.image.delete()
+
+    def test_upload_image(self):
+        # Test uploading an image to a recipe
+        url = image_upload_url(self.recipe.id)
+
+        # Create temp image file with jpg format
+        with tempfile.NamedTemporaryFile(suffix='.jpg') as image_file:
+            # Create black 10x10px image
+            img = Image.new('RGB', (10, 10))
+            # Save the image in image_file, converting it to the JPEG format
+            img.save(image_file, 'JPEG')
+            # Reset the file pointer to 0 to ensure correct reading
+            image_file.seek(0)
+            payload = {'image': image_file}
+            res = self.client.post(url, payload, format='multipart')
+
+        self.recipe.refresh_from_db()
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
+        self.assertIn('image', res.data)
+        # image.path -> ImageField's path attribute
+        self.assertTrue(os.path.exists(self.recipe.image.path))
+
+    def test_upload_image_invalid(self):
+        # Test uploading invalid image
+        url = image_upload_url(self.recipe.id)
+        payload = {'image': "invalid image"}
+        res = self.client.post(url, payload, format='multipart')
+
+        self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)

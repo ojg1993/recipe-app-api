@@ -2,6 +2,7 @@ from django.test import TestCase
 from django.contrib.auth import get_user_model
 from decimal import Decimal
 from core import models
+from unittest.mock import patch
 
 
 def create_user(email='user@example.com', password='test123'):
@@ -12,7 +13,7 @@ def create_user(email='user@example.com', password='test123'):
 class ModelTests(TestCase):
     def test_create_user_with_email_successful(self):
         # Test creating a user with an email
-        email = 'test@example.com'
+        email = 'tests@example.com'
         password = 'testPassword'
         user = get_user_model().objects.create_user(
             email=email,
@@ -41,7 +42,7 @@ class ModelTests(TestCase):
     def test_create_super_user(self):
         # Test creating a superuser
         user = get_user_model().objects.create_superuser(
-            'test@example.com',
+            'tests@example.com',
             'sample123'
         )
         self.assertTrue(user.is_superuser)
@@ -50,7 +51,7 @@ class ModelTests(TestCase):
     def test_create_recipe(self):
         # Test creating a recipe
         user = get_user_model().objects.create_user(
-            'test@example.com',
+            'tests@example.com',
             'testpass123'
         )
 
@@ -79,3 +80,12 @@ class ModelTests(TestCase):
             name='Ingredient1'
         )
         self.assertEqual(str(ingredient), ingredient.name)
+
+    @patch('core.models.uuid.uuid4')
+    def test_recipe_file_name_uuid(self, mock_uuid):
+        # Test generating image path
+        uuid = 'tests-uuid'
+        mock_uuid.return_value = uuid
+        file_path = models.recipe_file_name_uuid(None, 'example.jpg')
+
+        self.assertEqual(file_path, f'uploads/recipes/{uuid}.jpg')
