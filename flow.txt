@@ -157,7 +157,18 @@
     - Customised upload_image method and added in RecipeAPIViewSet using action decorator
       - Added 'COMPONENT_SPLIT_REQUEST': True in SPECTACULAR_SETTINGS
 
-
+23. Implement filtering functionality
+  - Implemented tests filtering recipe by tags and/or ingredients
+    - test_filter_by_tags, test_filter_by_ingredients
+  - Implemented recipe filter functionality
+    - Customised and Added _params_to_ints method
+    - Customised get_queryset method adding filtering functionality by tags and ingredients
+  - Customised OpenAPI Schema using 'extend_schema' and others from drf_spectacular.utils library
+  - Implemented tests filtering tags or ingredients assigned to recipes
+    - Added test_filter_ingredients_assigned_to_recipes, test_filtered_ingredients_unique method to test_ingredients_api.py
+    - Added test_filter_tags_assigned_to_recipes, test_filtered_tags_unique method to test_tags_api.py
+  - Implemented filtering tags or ingredients assigned to recipes
+    - Customised BaseRecipeAttrViewSet's get_queryset method passed its features to TagViewSet & IngredientViewSet
 
 
 
