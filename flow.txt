@@ -171,7 +171,24 @@
     - Customised BaseRecipeAttrViewSet's get_queryset method passed its features to TagViewSet & IngredientViewSet
 
 
-
+24. Deployment
+  1) setting dockerfile
+    - install linux-headers in docker instance
+    - copy scripts in docker instance
+    - set scripts directory as executable
+    - add run command for scripts
+    - update ENV command with scripts as ENV PATH="/scripts:/py/bin:$PATH"
+  2) writing run.sh in scripts directory
+  3) Adding proxy
+    - write default.conf.tpl
+    - add uwsgi_params
+    - pass env variables to default.conf by running run.sh
+    - write Dockerfile
+  4)Handling configuration
+    - write docker-compose-prod.yml
+    - write .env.sample(temporary test values)
+  5) Update django settings
+    - Secret key, debug, allowed hosts
 
 
 ※ TDD application
